@@ -302,6 +302,11 @@ pub(crate) struct GenerateParameters {
     #[serde(default)]
     #[schema(nullable = true, default = "null", example = "null")]
     pub grammar: Option<GrammarType>,
+
+    /// Lora adapter id
+    #[serde(default)]
+    #[schema(nullable = true, default = "null", example = "null")]
+    pub adapter_id: Option<String>,
 }
 
 fn default_max_new_tokens() -> Option<u32> {
@@ -328,6 +333,7 @@ fn default_parameters() -> GenerateParameters {
         seed: None,
         top_n_tokens: None,
         grammar: None,
+        adapter_id: None,
     }
 }
 
@@ -570,7 +576,7 @@ impl ChatCompletion {
         };
         Self {
             id: String::new(),
-            object: "text_completion".into(),
+            object: "chat.completion".into(),
             created,
             model,
             system_fingerprint,
@@ -682,7 +688,7 @@ impl ChatCompletionChunk {
         };
         Self {
             id: String::new(),
-            object: "text_completion".to_string(),
+            object: "chat.completion.chunk".to_string(),
             created,
             model,
             system_fingerprint,

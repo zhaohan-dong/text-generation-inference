@@ -337,6 +337,13 @@ Options:
           [env: OTLP_ENDPOINT=]
 
 ```
+## OTLP_SERVICE_NAME
+```shell
+      --otlp-service-name <OTLP_SERVICE_NAME>
+          [env: OTLP_SERVICE_NAME=]
+          [default: text-generation-inference.router]
+
+```
 ## CORS_ALLOW_ORIGIN
 ```shell
       --cors-allow-origin <CORS_ALLOW_ORIGIN>
@@ -408,6 +415,14 @@ Options:
           
           [env: MAX_CLIENT_BATCH_SIZE=]
           [default: 4]
+
+```
+## LORA_ADAPTERS
+```shell
+      --lora-adapters <LORA_ADAPTERS>
+          Lora Adapters a list of adapter ids i.e. `repo/adapter1,repo/adapter2` to load during startup that will be available to callers via the `adapter_id` field in a request
+          
+          [env: LORA_ADAPTERS=]
 
 ```
 ## HELP
