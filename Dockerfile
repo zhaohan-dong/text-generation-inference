@@ -89,25 +89,25 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
         ninja-build cmake \
         && rm -rf /var/lib/apt/lists/*
 
-# Build Flash Attention CUDA kernels
-FROM kernel-builder as flash-att-builder
+# # Build Flash Attention CUDA kernels
+# FROM kernel-builder as flash-att-builder
 
-WORKDIR /usr/src
+# WORKDIR /usr/src
 
-COPY server/Makefile-flash-att Makefile
+# COPY server/Makefile-flash-att Makefile
 
-# Build specific version of flash attention
-RUN make build-flash-attention
+# # Build specific version of flash attention
+# RUN make build-flash-attention
 
-# Build Flash Attention v2 CUDA kernels
-FROM kernel-builder as flash-att-v2-builder
+# # Build Flash Attention v2 CUDA kernels
+# FROM kernel-builder as flash-att-v2-builder
 
-WORKDIR /usr/src
+# WORKDIR /usr/src
 
-COPY server/Makefile-flash-att-v2 Makefile
+# COPY server/Makefile-flash-att-v2 Makefile
 
-# Build specific version of flash attention v2
-RUN make build-flash-attention-v2-cuda
+# # Build specific version of flash attention v2
+# RUN make build-flash-attention-v2-cuda
 
 # Build Transformers exllama kernels
 FROM kernel-builder as exllama-kernels-builder
@@ -196,12 +196,12 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
 COPY --from=pytorch-install /opt/conda /opt/conda
 
 # Copy build artifacts from flash attention builder
-COPY --from=flash-att-builder /usr/src/flash-attention/build/lib.linux-x86_64-cpython-310 /opt/conda/lib/python3.10/site-packages
-COPY --from=flash-att-builder /usr/src/flash-attention/csrc/layer_norm/build/lib.linux-x86_64-cpython-310 /opt/conda/lib/python3.10/site-packages
-COPY --from=flash-att-builder /usr/src/flash-attention/csrc/rotary/build/lib.linux-x86_64-cpython-310 /opt/conda/lib/python3.10/site-packages
+# COPY --from=flash-att-builder /usr/src/flash-attention/build/lib.linux-x86_64-cpython-310 /opt/conda/lib/python3.10/site-packages
+# COPY --from=flash-att-builder /usr/src/flash-attention/csrc/layer_norm/build/lib.linux-x86_64-cpython-310 /opt/conda/lib/python3.10/site-packages
+# COPY --from=flash-att-builder /usr/src/flash-attention/csrc/rotary/build/lib.linux-x86_64-cpython-310 /opt/conda/lib/python3.10/site-packages
 
-# Copy build artifacts from flash attention v2 builder
-COPY --from=flash-att-v2-builder /opt/conda/lib/python3.10/site-packages/flash_attn_2_cuda.cpython-310-x86_64-linux-gnu.so /opt/conda/lib/python3.10/site-packages
+# # Copy build artifacts from flash attention v2 builder
+# COPY --from=flash-att-v2-builder /opt/conda/lib/python3.10/site-packages/flash_attn_2_cuda.cpython-310-x86_64-linux-gnu.so /opt/conda/lib/python3.10/site-packages
 
 # Copy build artifacts from custom kernels builder
 COPY --from=custom-kernels-builder /usr/src/build/lib.linux-x86_64-cpython-310 /opt/conda/lib/python3.10/site-packages
